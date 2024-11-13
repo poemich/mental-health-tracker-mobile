@@ -125,13 +125,12 @@ class _MoodEntryFormPageState extends State<MoodEntryFormPage> {
                       if (_formKey.currentState!.validate()) {
                           // Kirim ke Django dan tunggu respons
                           final response = await request.postJson(
-                              "http://127.0.0.1:8000/create-flutter/",
-                              jsonEncode(<String, String>{
+                              "http://10.0.2.2:8000/create-flutter/",  // Updated URL for Android emulator
+                              jsonEncode(<String, dynamic>{            // Changed to dynamic for numeric value
                                   'mood': _mood,
-                                  'mood_intensity': _moodIntensity.toString(),
+                                  'mood_intensity': _moodIntensity,    // Send as number, not string
                                   'feelings': _feelings,
-                              }),
-                          );
+                              }));
                           if (context.mounted) {
                               if (response['status'] == 'success') {
                                   ScaffoldMessenger.of(context)
@@ -144,9 +143,9 @@ class _MoodEntryFormPageState extends State<MoodEntryFormPage> {
                                   );
                               } else {
                                   ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
+                                      .showSnackBar(SnackBar(
                                       content:
-                                          Text("Terdapat kesalahan, silakan coba lagi."),
+                                          Text(response['message'] ?? "Terdapat kesalahan, silakan coba lagi."),
                                   ));
                               }
                           }

@@ -32,23 +32,20 @@ class ItemCard extends StatelessWidget {
             );
 
           if (item.name == "Tambah Mood") {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const MoodEntryFormPage(),
-              ),
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const MoodEntryFormPage()),
             );
           }
           else if (item.name == "Lihat Mood") {
-              Navigator.push(context,
-                  MaterialPageRoute(
-                      builder: (context) => const MoodEntryPage()
-                  ),
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MoodEntryPage()),
               );
           }
           else if (item.name == "Logout") {
               final response = await request.logout(
-                  "http://10.0.2.2:8000/auth/logout/"); // Ubah URL untuk emulator Android
+                  "http://10.0.2.2:8000/auth/logout/");
               String message = response["message"];
               if (context.mounted) {
                   if (response['status']) {
